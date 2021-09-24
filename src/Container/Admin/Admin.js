@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import './Admin.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {fetchData} from "../../store/Actions/MenuAdminAction/MenuAdminAction";
-import ShowMenu from "../../Components/ShowMenu/ShowMenu";
+import ShowAdminMenu from "../ShowAdminMenu/ShowAdminMenu";
+import {fetchMenu} from "../../store/Actions/MenuAction/Menu";
+import InputAdminDate from "../../Components/InputAdminDate/InputAdminDate";
+import ShowOrders from "../../Components/ShowOrders/ShowOrders";
 
 const Admin = () => {
     const dispatch = useDispatch();
-    // const menu = useSelector(state => state.menuList);
     const [inputData, setInputData] = useState({
         name: '',
         price: 0,
@@ -14,7 +16,10 @@ const Admin = () => {
     });
 
     const onChangeHandler = e => {
-        const {name, value} = e.target;
+        let {name, value} = e.target;
+        if (name === 'price') {
+            value = parseInt(value);
+        }
         setInputData(prevState => ({
             ...prevState,
                 [name]: value
@@ -24,42 +29,26 @@ const Admin = () => {
     const onSubmitHandler = e => {
         e.preventDefault();
         dispatch(fetchData(inputData));
+        setInputData({
+            name: '',
+            price: 0,
+            url: '',
+        });
+        dispatch(fetchMenu());
     };
 
-    console.log(inputData);
     return (
         <div>
-            <form onSubmit={onSubmitHandler}>
-                <label>
-                    Введите название Блюда
-                    <input
-                        type="text"
-                        name="name"
-                        value={inputData.name}
-                        onChange={onChangeHandler}
-                    />
-                </label>
-                <label>
-                    Введите стоимость
-                    <input
-                        type="text"
-                        name="price"
-                        value={inputData.price}
-                        onChange={onChangeHandler}
-                    />
-                </label>
-                <label>
-                    Введите URL фото Блюда
-                    <input
-                        type="text"
-                        name="url"
-                        value={inputData.url}
-                        onChange={onChangeHandler}
-                    />
-                </label>
-                <button type="submit">Добавить</button>
-            </form>
-            <ShowMenu/>
+            <InputAdminDate
+                onSubmitHandler={onSubmitHandler}
+                onChangeHandler={onChangeHandler}
+                inputData={inputData}
+            />
+            <ShowAdminMenu
+                renew={inputData}
+            />
+
+            <ShowOrders/>
         </div>
     );
 };

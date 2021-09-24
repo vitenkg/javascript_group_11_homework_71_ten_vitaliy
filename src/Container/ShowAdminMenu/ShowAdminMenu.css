@@ -1,0 +1,14 @@
+.EditMenuAdmin {
+    width: 100%;
+}
+
+.EditMenu {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.EditList {
+    width: 31%;
+    margin: 5px 10px;
+    border: black 1px solid;
+}

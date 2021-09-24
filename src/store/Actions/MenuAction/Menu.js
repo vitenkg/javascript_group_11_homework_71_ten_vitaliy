@@ -13,7 +13,6 @@ export const fetchMenu = () => {
         dispatch(fetchMenuRequest());
         try {
             const response = await axiosApi.get('/pizza/menu.json');
-            console.log(response.data);
             const data = Object.keys(response.data).map(type => {
                 return {name: response.data[type].name, price: response.data[type].price, id: type, url: response.data[type].url}
             });
@@ -27,7 +26,7 @@ export const fetchMenu = () => {
 export const fetchData = (data) => {
     return async (dispatch, getState) => {
         try {
-            await axiosApi.post('/cafe/order.json', data);
+            await axiosApi.post('/pizza/orders.json', data);
         } catch (e) {
         }
     };

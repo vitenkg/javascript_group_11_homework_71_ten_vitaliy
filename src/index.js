@@ -7,12 +7,16 @@ import App from './App';
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import menuReducer from "./store/Reducers/MenuReducer/Menu";
 import cartReducer from "./store/Reducers/CartReducer/Cart";
+import AdminReducer from "./store/Reducers/AdminReducer/AdminReducer";
+import AdminOrdersReducer from "./store/Reducers/AdminOrdersReducer/AdminOrdersReducer";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
     menuList: menuReducer,
     cartOrder: cartReducer,
+    adminMenuList: AdminReducer,
+    adminOrders: AdminOrdersReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancer(

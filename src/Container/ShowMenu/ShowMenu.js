@@ -3,9 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import './ShowMenu.css';
 import {fetchMenu} from "../../store/Actions/MenuAction/Menu";
 import {increase} from "../../store/Actions/CartAction/Cart";
-import Spinner from "../UI/Spinner/Spinner";
+import Spinner from "../../Components/UI/Spinner/Spinner";
 
-const Menu = () => {
+const ShowMenu = () => {
     const dispatch = useDispatch();
     const menu = useSelector(state => state.menuList.menu);
     const loading = useSelector(state => state.menuList.loading)
@@ -14,8 +14,8 @@ const Menu = () => {
         dispatch(fetchMenu());
     }, [dispatch]);
 
-    const onButtonHandler = (key, price) => {
-        dispatch(increase({key, price}));
+    const onButtonHandler = (key, price, id) => {
+        dispatch(increase({key, price, id}));
     };
 
     let components = (
@@ -35,7 +35,7 @@ const Menu = () => {
                         <button
                             type="button"
                             className="BtnAdd"
-                            onClick={() => onButtonHandler(item.name, item.price)}
+                            onClick={() => onButtonHandler(item.name, item.price, item.id)}
                         >
                             Add to Cart</button>
                     </li>
@@ -57,4 +57,4 @@ const Menu = () => {
     )
 };
 
-export default Menu;
+export default ShowMenu;
